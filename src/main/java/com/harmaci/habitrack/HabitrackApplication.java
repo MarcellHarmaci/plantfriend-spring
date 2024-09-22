@@ -1,4 +1,4 @@
-package ci.harma.habitrack;
+package com.harmaci.habitrack;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

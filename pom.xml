@@ -8,7 +8,7 @@
         <version>3.3.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>ci.harma</groupId>
+    <groupId>com.harmaci</groupId>
     <artifactId>habitrack</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>habitrack</name>
@@ -27,7 +27,7 @@
         <url/>
     </scm>
     <properties>
-        <start-class>ci.harma.habitrack.HabitrackApplication</start-class>
+        <start-class>com.harmaci.habitrack.HabitrackApplication</start-class>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <springdoc.version>1.6.14</springdoc.version>
@@ -129,13 +129,12 @@
                             <generatorName>spring</generatorName>
                             <library>spring-boot</library>
                             <configOptions>
+                                <sourceFolder>src/main/java/</sourceFolder>
+                                <delegatePattern>true</delegatePattern>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useJakarta>true</useJakarta>
                                 <generateApiTests>false</generateApiTests>
                                 <generateModelTests>false</generateModelTests>
-                                <sourceFolder>src/main/java/</sourceFolder>
-                                <!--                                <output>${project.basedir}/src/main/java/generated</output>-->
-                                <useSpringBoot3>true</useSpringBoot3>
-                                <delegatePattern>true</delegatePattern>
-                                <!--                                <interfaceOnly>true</interfaceOnly>-->
                             </configOptions>
                         </configuration>
                     </execution>

@@ -1,6 +1,5 @@
-package ci.harma.habitrack;
+package com.harmaci.habitrack;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest

@@ -35,7 +35,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/HabitResponse'
+                  $ref: '#/components/schemas/Habit'
   /habit:
     post:
       tags:
@@ -46,7 +46,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/HabitRequest'
+              $ref: '#/components/schemas/HabitData'
         required: true
       responses:
         '200':
@@ -54,7 +54,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HabitResponse'          
+                $ref: '#/components/schemas/Habit'
         '400':
           description: Invalid input
         '422':
@@ -69,7 +69,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/HabitResponse'
+              $ref: '#/components/schemas/Habit'
         required: true
       responses:
         '400':
@@ -97,7 +97,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HabitResponse'          
+                $ref: '#/components/schemas/Habit'
         '400':
           description: Invalid ID supplied
         '404':
@@ -173,7 +173,8 @@ paths:
           description: successful operation
 components:
   schemas:
-    HabitRequest:
+    HabitData:
+      description: A habit's data without an id
       required:
         - name
       type: object
@@ -181,14 +182,18 @@ components:
         name:
           type: string
           example: "Read one chapter"
-    HabitResponse:
+    Habit:
+      type: object
+      x-class-extra-annotation: "@jakarta.persistence.Entity"
       required:
         - id
         - name
-      type: object
       properties:
         id:
           type: integer
+          x-field-extra-annotation: |-
+            @jakarta.persistence.Id
+            @jakarta.persistence.GeneratedValue
           example: 123
         name:
           type: string
@@ -199,5 +204,5 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/HabitRequest'
+            $ref: '#/components/schemas/HabitData'
     

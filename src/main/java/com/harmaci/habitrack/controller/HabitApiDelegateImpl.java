@@ -1,4 +1,4 @@
-package com.harmaci.habitrack.habit;
+package com.harmaci.habitrack.controller;
 
 import org.openapitools.api.HabitApiDelegate;
 import org.springframework.stereotype.Controller;

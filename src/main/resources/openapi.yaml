@@ -184,16 +184,12 @@ components:
           example: "Read one chapter"
     Habit:
       type: object
-      x-class-extra-annotation: "@jakarta.persistence.Entity"
       required:
-        - id
         - name
       properties:
         id:
           type: integer
-          x-field-extra-annotation: |-
-            @jakarta.persistence.Id
-            @jakarta.persistence.GeneratedValue
+          format: int64
           example: 123
         name:
           type: string

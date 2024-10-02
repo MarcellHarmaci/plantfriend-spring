@@ -18,6 +18,12 @@ public class Habit {
     private String name;
 
     /**
+     * Default constructor for Interceptor
+     */
+    public Habit() {
+    }
+
+    /**
      * Constructor for a Habit without an id
      */
     public Habit(String name) {

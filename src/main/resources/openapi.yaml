@@ -1,12 +1,12 @@
 openapi: 3.0.3
 info:
-  title: HabiTrack API definition - OpenAPI 3.0
+  title: Plant Friend API definition - OpenAPI 3.0
   description: |-
-    This is HabiTrack API definition based on the OpenAPI 3.0 specification.
+    This is Plant Friend API definition based on the OpenAPI 3.0 specification.
     
     Some useful links:
-    - [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)
-    - [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+    - [Plant Friend repository](https://github.com/MarcellHarmaci/habitrack-spring)
+    - [The source API definition in yaml](https://github.com/MarcellHarmaci/habitrack-spring/blob/main/src/main/resources/openapi.yaml)
   contact:
     email: harmaci.marci@gmail.com
   license:
@@ -14,19 +14,19 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.11
 servers:
-  - url: https://habitrack.harmaci.com/api
+  - url: https://plantfriend.harmaci.com/api
 tags:
-  - name: habit
-    description: Operations about habits
+  - name: plant
+    description: Operations about plants
   - name: user
     description: Operations about user
 paths:
-  /habits:
+  /plants:
     get:
       tags:
-        - habit
-      summary: Read all saved habits
-      operationId: getHabits
+        - plant
+      summary: Read all saved plants
+      operationId: getPlants
       responses:
         '200':
           description: Successful operation
@@ -35,18 +35,18 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Habit'
-  /habit:
+                  $ref: '#/components/schemas/Plant'
+  /plant:
     post:
       tags:
-        - habit
-      summary: Create a new habit
-      operationId: addHabit
+        - plant
+      summary: Create a new plant
+      operationId: addPlant
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/HabitData'
+              $ref: '#/components/schemas/PlantData'
         required: true
       responses:
         '200':
@@ -54,39 +54,39 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Habit'
+                $ref: '#/components/schemas/Plant'
         '400':
           description: Invalid input
         '422':
           description: Validation exception
     put:
       tags:
-        - habit
-      summary: Update a habit
+        - plant
+      summary: Update a plant
       description: ''
-      operationId: updateHabitById
+      operationId: updatePlantById
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Habit'
+              $ref: '#/components/schemas/Plant'
         required: true
       responses:
         '400':
           description: Invalid input
         '404':
-          description: No habit found with given id
-  /habit/{id}:
+          description: No plant found with given id
+  /plant/{id}:
     get:
       tags:
-        - habit
-      summary: Read habit by id
-      description: Returns a single habit
-      operationId: getHabitById
+        - plant
+      summary: Read plant by id
+      description: Returns a single plant
+      operationId: getPlantById
       parameters:
         - name: id
           in: path
-          description: ID of habit to return
+          description: ID of plant to return
           required: true
           schema:
             type: integer
@@ -97,28 +97,28 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Habit'
+                $ref: '#/components/schemas/Plant'
         '400':
           description: Invalid ID supplied
         '404':
-          description: Habit not found
+          description: Plant not found
     delete:
       tags:
-        - habit
-      summary: Delete a habit by id
-      operationId: deleteHabitById
+        - plant
+      summary: Delete a plant by id
+      operationId: deletePlantById
       parameters:
         - name: id
           in: path
-          description: Habit id to delete
+          description: Plant id to delete
           required: true
           schema:
             type: integer
       responses:
         '404':
-          description: No habit found with given id
+          description: No plant found with given id
         '405':
-          description: The requested habit is already deleted
+          description: The requested plant is already deleted
 
   /user/login:
     get:
@@ -173,8 +173,8 @@ paths:
           description: successful operation
 components:
   schemas:
-    HabitData:
-      description: A habit's data without an id
+    PlantData:
+      description: A plant's data without an id
       required:
         - name
       type: object
@@ -182,9 +182,10 @@ components:
         name:
           type: string
           example: "Read one chapter"
-    Habit:
+    Plant:
       type: object
       required:
+        - id
         - name
       properties:
         id:
@@ -195,10 +196,10 @@ components:
           type: string
           example: "Read one chapter"
   requestBodies:
-    Habit:
-      description: Pet object that needs to be added to the store
+    PlantBody:
+      description: Plant object that needs to be added
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/HabitData'
+            $ref: '#/components/schemas/PlantData'
     

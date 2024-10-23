@@ -1,4 +1,4 @@
-package com.harmaci.habitrack.repository.model;
+package com.harmaci.plantfriend.repository.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
-public class Habit {
+public class Plant {
 
     @Id
     @GeneratedValue
@@ -20,26 +20,27 @@ public class Habit {
     /**
      * Default constructor for Interceptor
      */
-    public Habit() {
+    public Plant() {
     }
 
     /**
      * Constructor for a Habit without an id
      */
-    public Habit(String name) {
+    public Plant(String name) {
         this.name = name;
     }
 
-    public Habit(Long id, String name) {
+    public Plant(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Habit id(Long id) {
+    public Plant id(Long id) {
         this.id = id;
         return this;
     }
 
+    @NotNull
     @JsonProperty("id")
     public Long getId() {
         return id;
@@ -49,7 +50,7 @@ public class Habit {
         this.id = id;
     }
 
-    public Habit name(String name) {
+    public Plant name(String name) {
         this.name = name;
         return this;
     }
@@ -69,12 +70,12 @@ public class Habit {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Habit habit)) {
+        if (!(o instanceof Plant plant)) {
             return false;
         }
 
-        return Objects.equals(this.id, habit.id) &&
-                Objects.equals(this.name, habit.name);
+        return Objects.equals(this.id, plant.id) &&
+                Objects.equals(this.name, plant.name);
     }
 
     @Override

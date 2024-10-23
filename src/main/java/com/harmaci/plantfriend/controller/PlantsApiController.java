@@ -1,7 +1,7 @@
-package com.harmaci.habitrack.controller;
+package com.harmaci.plantfriend.controller;
 
-import com.harmaci.habitrack.service.HabitService;
-import org.openapitools.model.Habit;
+import com.harmaci.plantfriend.service.PlantService;
+import org.openapitools.model.Plant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -10,16 +10,16 @@ import org.springframework.web.context.request.NativeWebRequest;
 import java.util.List;
 
 @Controller
-public class HabitsApiController extends org.openapitools.api.HabitsApiController {
-    private final HabitService service;
+public class PlantsApiController extends org.openapitools.api.PlantsApiController {
+    private final PlantService service;
 
-    public HabitsApiController(NativeWebRequest request, HabitService service) {
+    public PlantsApiController(NativeWebRequest request, PlantService service) {
         super(request);
         this.service = service;
     }
 
     @Override
-    public ResponseEntity<List<Habit>> getHabits() {
+    public ResponseEntity<List<Plant>> getPlants() {
         return new ResponseEntity<>(
                 service.findAll(),
                 HttpStatus.OK

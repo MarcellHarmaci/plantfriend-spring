@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.harmaci</groupId>
-    <artifactId>habitrack</artifactId>
+    <artifactId>plantfriend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>habitrack</name>
-    <description>HabiTrack REST API backend in Spring Boot</description>
+    <name>plantfriend</name>
+    <description>Plant Friend REST API backend in Spring Boot</description>
     <url/>
     <licenses>
         <license/>
@@ -27,10 +27,9 @@
         <url/>
     </scm>
     <properties>
-        <start-class>com.harmaci.habitrack.HabitrackApplication</start-class>
+        <start-class>com.harmaci.plantfriend.PlantFriendApplication</start-class>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <springdoc.version>1.6.14</springdoc.version>
         <swagger-ui.version>5.3.1</swagger-ui.version>
     </properties>
     <dependencies>
@@ -72,8 +71,8 @@
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>${springdoc.version}</version>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.6.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.findbugs</groupId>

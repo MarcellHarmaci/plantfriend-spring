@@ -1,4 +1,4 @@
-package com.harmaci.habitrack.controller;
+package com.harmaci.plantfriend.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

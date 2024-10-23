@@ -1,9 +1,9 @@
-package com.harmaci.habitrack;
+package com.harmaci.plantfriend;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HabitrackApplicationTests {
+class PlantFriendApplicationTests {
 
 //	@Test
 //	void contextLoads() {

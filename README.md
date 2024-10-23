@@ -1,5 +1,5 @@
-# HabiTrack Spring Boot
-A habit tracker backend using Java, Spring Boot and PostgreSQL.
+# Plant Friend Spring Boot :seedling:
+A Spring Boot backend implemented in Java, connected to a PostgreSQL database.
 
 ## Configuration
 To connect the application to a postgresql DB some values need to be set in `application.properties`

@@ -48,18 +48,16 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- database -->
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.postgresql</groupId>-->
-<!--            <artifactId>postgresql</artifactId>-->
-<!--            <scope>runtime</scope>-->
-<!--        </dependency>-->
-
-
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- dependencies from openapi generator -->
         <dependency>
@@ -130,9 +128,9 @@
                             <library>spring-boot</library>
                             <configOptions>
                                 <sourceFolder>src/main/java/</sourceFolder>
-                                <delegatePattern>true</delegatePattern>
                                 <useSpringBoot3>true</useSpringBoot3>
                                 <useJakarta>true</useJakarta>
+<!--                                <hateoas>true</hateoas>-->
                                 <generateApiTests>false</generateApiTests>
                                 <generateModelTests>false</generateModelTests>
                             </configOptions>

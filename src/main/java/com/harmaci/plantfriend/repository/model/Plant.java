@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
+import org.openapitools.model.PlantData;
 
 import java.util.Objects;
 
@@ -35,6 +36,11 @@ public class Plant {
         this.name = name;
     }
 
+    public Plant(Long id, PlantData plantData) {
+        this.id = id;
+        this.name = plantData.getName();
+    }
+
     public Plant id(Long id) {
         this.id = id;
         return this;
@@ -46,10 +52,6 @@ public class Plant {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Plant name(String name) {
         this.name = name;
         return this;
@@ -59,10 +61,6 @@ public class Plant {
     @JsonProperty("name")
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

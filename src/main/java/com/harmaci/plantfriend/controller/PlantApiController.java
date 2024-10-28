@@ -39,13 +39,16 @@ public class PlantApiController extends org.openapitools.api.PlantApiController 
     }
 
     @Override
-    public ResponseEntity<org.openapitools.model.Plant> updatePlantById(Long id, org.openapitools.model.Plant plant) {
+    public ResponseEntity<org.openapitools.model.Plant> updatePlantById(
+            Long id,
+            PlantData plantData
+    ) {
         Plant oldPlant = service.getPlantById(id);
         if (oldPlant == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Plant result = service.savePlant(Mapping.NetworkToDomain.plant(plant));
+        Plant result = service.savePlant(new Plant(id, plantData));
         return new ResponseEntity<>(Mapping.DomainToNetwork.plant(result), HttpStatus.OK);
     }
 

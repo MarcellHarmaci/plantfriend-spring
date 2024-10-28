@@ -1,7 +1,7 @@
 package com.harmaci.plantfriend.controller;
 
+import com.harmaci.plantfriend.service.Mapping;
 import com.harmaci.plantfriend.service.PlantService;
-import org.openapitools.model.Plant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,9 +19,9 @@ public class PlantsApiController extends org.openapitools.api.PlantsApiControlle
     }
 
     @Override
-    public ResponseEntity<List<Plant>> getPlants() {
+    public ResponseEntity<List<org.openapitools.model.Plant>> getPlants() {
         return new ResponseEntity<>(
-                service.findAll(),
+                service.findAll().stream().map(Mapping.DomainToNetwork::plant).toList(),
                 HttpStatus.OK
         );
     }

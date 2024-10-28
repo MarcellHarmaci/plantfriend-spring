@@ -1,6 +1,7 @@
 # jasypt encryptor password
 jasypt.encryptor.password
 
+swagger.yaml
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar

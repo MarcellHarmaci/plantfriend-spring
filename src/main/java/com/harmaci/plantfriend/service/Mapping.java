@@ -1,8 +1,8 @@
 package com.harmaci.plantfriend.service;
 
 import com.harmaci.plantfriend.repository.model.Plant;
-//import org.openapitools.model.Plant;
 
+import javax.annotation.Nonnull;
 
 public class Mapping {
 
@@ -22,7 +22,7 @@ public class Mapping {
      * Mappings from network model to domain model
      */
     public static class NetworkToDomain {
-        public static Plant plant(org.openapitools.model.Plant domainModel) {
+        public static Plant plant(@Nonnull org.openapitools.model.Plant domainModel) {
             return new Plant(
                     domainModel.getId(),
                     domainModel.getName()

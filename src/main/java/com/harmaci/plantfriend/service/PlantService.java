@@ -9,7 +9,6 @@ import java.util.List;
 
 @Service
 public class PlantService {
-
     private final PlantRepository repository;
 
     public PlantService(PlantRepository repository) {
@@ -33,4 +32,5 @@ public class PlantService {
     public Plant savePlant(Plant plant) {
         return repository.save(plant);
     }
+
 }

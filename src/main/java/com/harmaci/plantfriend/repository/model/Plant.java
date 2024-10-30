@@ -1,9 +1,7 @@
 package com.harmaci.plantfriend.repository.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.openapitools.model.PlantData;
 
@@ -13,7 +11,8 @@ import java.util.Objects;
 public class Plant {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "plant_seq_gen")
+    @SequenceGenerator(name = "plant_seq_gen", sequenceName = "plant_id_seq", allocationSize = 1)
     private Long id;
 
     private String name;
@@ -38,6 +37,10 @@ public class Plant {
 
     public Plant(Long id, PlantData plantData) {
         this.id = id;
+        this.name = plantData.getName();
+    }
+
+    public Plant(PlantData plantData) {
         this.name = plantData.getName();
     }
 

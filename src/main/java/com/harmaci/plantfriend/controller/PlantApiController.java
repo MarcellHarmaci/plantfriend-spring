@@ -19,18 +19,6 @@ public class PlantApiController extends org.openapitools.api.PlantApiController 
     }
 
     @Override
-    public ResponseEntity<org.openapitools.model.Plant> addPlant(PlantData plantData) {
-        // TODO implement method
-        return super.addPlant(plantData);
-    }
-
-    @Override
-    public ResponseEntity<Void> deletePlantById(Integer id) {
-        // TODO implement method
-        return super.deletePlantById(id);
-    }
-
-    @Override
     public ResponseEntity<org.openapitools.model.Plant> getPlantById(Long id) {
         Plant plant = service.getPlantById(id);
         return plant != null
@@ -50,6 +38,19 @@ public class PlantApiController extends org.openapitools.api.PlantApiController 
 
         Plant result = service.savePlant(new Plant(id, plantData));
         return new ResponseEntity<>(Mapping.DomainToNetwork.plant(result), HttpStatus.OK);
+    }
+
+
+    @Override
+    public ResponseEntity<org.openapitools.model.Plant> addPlant(PlantData plantData) {
+        Plant result = service.savePlant(new Plant(plantData));
+        return new ResponseEntity<>(Mapping.DomainToNetwork.plant(result), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Void> deletePlantById(Integer id) {
+        // TODO implement method
+        return super.deletePlantById(id);
     }
 
 }

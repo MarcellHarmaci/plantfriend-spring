@@ -33,4 +33,12 @@ public class PlantService {
         return repository.save(plant);
     }
 
+    public boolean deletePlant(Long id) {
+        Plant plant = getPlantById(id);
+        if (plant == null) return  false;
+
+        repository.deleteById(id);
+        return true;
+    }
+
 }

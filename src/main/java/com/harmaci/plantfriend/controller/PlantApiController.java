@@ -49,8 +49,8 @@ public class PlantApiController extends org.openapitools.api.PlantApiController 
 
     @Override
     public ResponseEntity<Void> deletePlantById(Integer id) {
-        // TODO implement method
-        return super.deletePlantById(id);
+        boolean isDeletionSuccessful = service.deletePlant(Long.valueOf(id));
+        return isDeletionSuccessful ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 }

@@ -3,7 +3,6 @@ package com.harmaci.plantfriend.repository.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import org.openapitools.model.PlantData;
 
 import java.util.Objects;
 
@@ -33,15 +32,6 @@ public class Plant {
     public Plant(Long id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public Plant(Long id, PlantData plantData) {
-        this.id = id;
-        this.name = plantData.getName();
-    }
-
-    public Plant(PlantData plantData) {
-        this.name = plantData.getName();
     }
 
     public Plant id(Long id) {

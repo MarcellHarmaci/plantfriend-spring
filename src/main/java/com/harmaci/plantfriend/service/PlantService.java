@@ -25,17 +25,42 @@ public class PlantService {
     }
 
     /**
-     * Save a plant. If a record by <code>plant.id</code> already exists, then updates it, otherwise inserts a new record.
-     * @param plant A plant object, whose <code>id</code> is ignored if it doesn't exist in the database.
-     * @return The new DB state of the plant
+     * Create a new plant
+     *
+     * @param plant The plant to be inserted. Must not have an id
+     * @return The created plant
+     * @throws IllegalArgumentException Thrown when the <code>plant</code> parameter's id is not null
      */
-    public Plant savePlant(Plant plant) {
+    public Plant createPlant(Plant plant) throws IllegalArgumentException {
+        if (plant.getId() != null) {
+            throw new IllegalArgumentException("The record must not have an id to insert");
+        }
         return repository.save(plant);
     }
 
+    /**
+     * Update an existing plant
+     *
+     * @param plant The updated value
+     * @return The updated plant
+     * @throws IllegalArgumentException Thrown when the <code>plant</code> parameter's id is null
+     */
+    public Plant updatePlant(Plant plant) throws IllegalArgumentException {
+        if (plant.getId() == null) {
+            throw new IllegalArgumentException("The record must have an id to update");
+        }
+        return repository.save(plant);
+    }
+
+    /**
+     * Delete a plant by id
+     *
+     * @param id The id of the plant to be deleted
+     * @return Whether the deletion was successful or not
+     */
     public boolean deletePlant(Long id) {
         Plant plant = getPlantById(id);
-        if (plant == null) return  false;
+        if (plant == null) return false;
 
         repository.deleteById(id);
         return true;

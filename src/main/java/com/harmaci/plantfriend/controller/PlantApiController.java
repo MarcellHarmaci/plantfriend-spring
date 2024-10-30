@@ -36,15 +36,22 @@ public class PlantApiController extends org.openapitools.api.PlantApiController 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Plant result = service.savePlant(new Plant(id, plantData));
-        return new ResponseEntity<>(Mapping.DomainToNetwork.plant(result), HttpStatus.OK);
+        try {
+            Plant result = service.updatePlant(new Plant(id, plantData.getName()));
+            return new ResponseEntity<>(Mapping.DomainToNetwork.plant(result), HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-
 
     @Override
     public ResponseEntity<org.openapitools.model.Plant> addPlant(PlantData plantData) {
-        Plant result = service.savePlant(new Plant(plantData));
-        return new ResponseEntity<>(Mapping.DomainToNetwork.plant(result), HttpStatus.OK);
+        try {
+            Plant result = service.createPlant(new Plant(plantData.getName()));
+            return new ResponseEntity<>(Mapping.DomainToNetwork.plant(result), HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override

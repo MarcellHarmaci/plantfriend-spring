@@ -24,6 +24,10 @@ public class PlantService {
                 .orElse(null);
     }
 
+    public boolean plantExists(Long id) {
+        return repository.findById(id).isPresent();
+    }
+
     /**
      * Create a new plant
      *

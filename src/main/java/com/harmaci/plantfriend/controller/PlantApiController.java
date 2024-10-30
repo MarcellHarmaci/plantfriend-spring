@@ -29,15 +29,22 @@ public class PlantApiController extends org.openapitools.api.PlantApiController 
     @Override
     public ResponseEntity<org.openapitools.model.Plant> updatePlantById(
             Long id,
-            PlantData plantData
+            org.openapitools.model.Plant plant
     ) {
-        Plant oldPlant = service.getPlantById(id);
-        if (oldPlant == null) {
+        // validation
+        if (!plant.getId().equals(id) || plant.getName().isBlank()) {
+            return new ResponseEntity<>(
+                    plant,
+                    HttpStatus.UNPROCESSABLE_ENTITY
+            );
+        }
+
+        if (!service.plantExists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         try {
-            Plant result = service.updatePlant(new Plant(id, plantData.getName()));
+            Plant result = service.updatePlant(Mapping.NetworkToDomain.plant(plant));
             return new ResponseEntity<>(Mapping.DomainToNetwork.plant(result), HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -46,6 +53,15 @@ public class PlantApiController extends org.openapitools.api.PlantApiController 
 
     @Override
     public ResponseEntity<org.openapitools.model.Plant> addPlant(PlantData plantData) {
+        // validation
+        if (plantData.getName().isBlank()) {
+            Plant inValidData = new Plant(plantData.getName());
+            return new ResponseEntity<>(
+                    Mapping.DomainToNetwork.plant(inValidData),
+                    HttpStatus.UNPROCESSABLE_ENTITY
+            );
+        }
+
         try {
             Plant result = service.createPlant(new Plant(plantData.getName()));
             return new ResponseEntity<>(Mapping.DomainToNetwork.plant(result), HttpStatus.OK);

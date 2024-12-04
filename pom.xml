@@ -48,21 +48,28 @@
         </dependency>
 
         <!-- database -->
+<!--    TODO uncomment when switching back to PostgreSQL from H2    -->
+<!--        <dependency>-->
+<!--            <groupId>org.postgresql</groupId>-->
+<!--            <artifactId>postgresql</artifactId>-->
+<!--        </dependency>-->
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <!-- for decrypting records in application.properties -->
-            <groupId>com.github.ulisesbocchio</groupId>
-            <artifactId>jasypt-spring-boot-starter</artifactId>
-            <version>3.0.5</version>
-        </dependency>
+<!--    TODO uncomment when switching back to PostgreSQL from H2    -->
+<!--        <dependency>-->
+<!--            &lt;!&ndash; for decrypting records in application.properties &ndash;&gt;-->
+<!--            <groupId>com.github.ulisesbocchio</groupId>-->
+<!--            <artifactId>jasypt-spring-boot-starter</artifactId>-->
+<!--            <version>3.0.5</version>-->
+<!--        </dependency>-->
 
         <!-- dependencies from openapi generator -->
         <dependency>

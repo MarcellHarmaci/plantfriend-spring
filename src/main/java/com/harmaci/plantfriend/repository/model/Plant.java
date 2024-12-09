@@ -2,12 +2,14 @@ package com.harmaci.plantfriend.repository.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
+@Accessors(fluent = true)
 public class Plant {
 
     @Id

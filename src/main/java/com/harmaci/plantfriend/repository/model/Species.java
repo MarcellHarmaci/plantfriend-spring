@@ -2,12 +2,14 @@ package com.harmaci.plantfriend.repository.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
+@Accessors(fluent = true)
 public class Species {
 
     @Id
@@ -17,7 +19,7 @@ public class Species {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "species", cascade = CascadeType.DETACH, orphanRemoval = false)
+    @OneToMany(mappedBy = "species")
     private List<Plant> plants = new ArrayList<>();
 
     public Species() {

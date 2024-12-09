@@ -2,11 +2,13 @@ package com.harmaci.plantfriend.repository.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDate;
 
 @Entity
 @Data
+@Accessors(fluent = true)
 public class Watering {
 
     @Id

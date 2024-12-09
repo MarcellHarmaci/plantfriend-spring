@@ -36,7 +36,7 @@ public class PlantService {
      * @throws IllegalArgumentException Thrown when the <code>plant</code> parameter's id is not null
      */
     public Plant createPlant(Plant plant) throws IllegalArgumentException {
-        if (plant.getId() != null) {
+        if (plant.id() != null) {
             throw new IllegalArgumentException("The record must not have an id to insert");
         }
         return repository.save(plant);
@@ -50,7 +50,7 @@ public class PlantService {
      * @throws IllegalArgumentException Thrown when the <code>plant</code> parameter's id is null
      */
     public Plant updatePlant(Plant plant) throws IllegalArgumentException {
-        if (plant.getId() == null) {
+        if (plant.id() == null) {
             throw new IllegalArgumentException("The record must have an id to update");
         }
         return repository.save(plant);

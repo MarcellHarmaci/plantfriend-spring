@@ -16,19 +16,28 @@ public class Watering {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "plant_id", foreignKey = @ForeignKey(name = "PLANT_ID_FK"))
+    @JoinColumn(name = "plant_id", foreignKey = @ForeignKey(name = "PLANT_ID_FK"), nullable = false)
     private Plant plant;
 
+    @Column(nullable = false)
     private LocalDate date;
 
+    /**
+     * An integer describing the health of the plant. The higher, the better. Domain: [1:5]
+     */
+    @Column(nullable = false)
+    private Integer plantHealth;
+
+    @Column(nullable = true)
     private String comment;
 
     public Watering() {
     }
 
-    public Watering(Plant plant, LocalDate date, String comment) {
+    public Watering(Plant plant, LocalDate date, Integer plantHealth, String comment) {
         this.plant = plant;
         this.date = date;
+        this.plantHealth = plantHealth;
         this.comment = comment;
     }
 }

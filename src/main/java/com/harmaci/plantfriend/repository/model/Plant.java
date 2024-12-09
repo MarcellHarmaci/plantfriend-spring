@@ -11,12 +11,17 @@ import java.util.List;
 public class Plant {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "plant_seq_gen")
-    @SequenceGenerator(name = "plant_seq_gen", sequenceName = "plant_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "plant_seq_gen")
+//    @SequenceGenerator(name = "plant_seq_gen", sequenceName = "plant_id_seq", allocationSize = 1)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "species_id", foreignKey = @ForeignKey(name = "SPECIES_ID_FK"), nullable = true)
+    private Species species;
 
     @OneToMany(mappedBy = "plant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Watering> waterings = new ArrayList<>();

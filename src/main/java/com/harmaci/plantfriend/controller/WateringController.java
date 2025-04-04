@@ -1,25 +1,36 @@
 package com.harmaci.plantfriend.controller;
 
+import com.harmaci.plantfriend.service.Mapping;
+import com.harmaci.plantfriend.service.WateringService;
 import org.openapitools.api.WateringsApiController;
 import org.openapitools.model.AddPlantWateringRequest;
 import org.openapitools.model.PlantWatering;
 import org.openapitools.model.Watering;
 import org.openapitools.model.WateringUpdate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Controller
 public class WateringController extends WateringsApiController {
-    public WateringController(NativeWebRequest request) {
+    private final WateringService service;
+
+    public WateringController(NativeWebRequest request, WateringService service) {
         super(request);
+        this.service = service;
     }
 
     @Override
-    public ResponseEntity<List<Watering>> getRecentWaterings(Long offset, Integer limit) {
-        // TODO implement endpoint
-        return super.getRecentWaterings(offset, limit);
+    public ResponseEntity<List<Watering>> getRecentWaterings(Integer offset, Integer limit) {
+        List<Watering> recentWaterings = service.getRecentWaterings(offset, limit)
+                .stream()
+                .map(Mapping.DomainToNetwork::watering)
+                .toList();
+        return new ResponseEntity<>(recentWaterings, HttpStatus.OK);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.harmaci.plantfriend.service;
 
 import com.harmaci.plantfriend.repository.model.Plant;
+import com.harmaci.plantfriend.repository.model.Watering;
 
 import javax.annotation.Nonnull;
 
@@ -15,6 +16,16 @@ public class Mapping {
                     domainModel.id(),
                     domainModel.name()
             );
+        }
+
+        public static org.openapitools.model.Watering watering(Watering domainModel) {
+            org.openapitools.model.Watering networkModel = new org.openapitools.model.Watering(
+                    domainModel.plant().id(),
+                    domainModel.date(),
+                    domainModel.comment()
+            );
+            networkModel.setId(domainModel.id());
+            return networkModel;
         }
     }
 

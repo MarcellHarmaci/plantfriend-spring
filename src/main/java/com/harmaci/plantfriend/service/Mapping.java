@@ -27,6 +27,14 @@ public class Mapping {
             networkModel.setId(domainModel.id());
             return networkModel;
         }
+
+        public static org.openapitools.model.PlantWatering plantWatering(Watering domainModel) {
+            return new org.openapitools.model.PlantWatering(
+                    domainModel.id(),
+                    domainModel.date(),
+                    domainModel.comment()
+            );
+        }
     }
 
     /**

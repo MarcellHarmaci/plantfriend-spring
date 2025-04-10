@@ -35,14 +35,17 @@ public class WateringController extends WateringsApiController {
 
     @Override
     public ResponseEntity<List<PlantWatering>> getWateringsByPlant(Long id) {
-        // TODO implement endpoint
-        return super.getWateringsByPlant(id);
+        List<PlantWatering> wateringsOfPlant = service.getWateringsByPlantId(id)
+                .stream()
+                .map(Mapping.DomainToNetwork::plantWatering)
+                .toList();
+        return new ResponseEntity<>(wateringsOfPlant, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<List<LocalDate>> getWateringDatesByPlant(Long id) {
-        // TODO implement endpoint
-        return super.getWateringDatesByPlant(id);
+        List<LocalDate> wateringDates = service.getWateringDatesByPlantId(id);
+        return new ResponseEntity<>(wateringDates, HttpStatus.OK);
     }
 
     @Override

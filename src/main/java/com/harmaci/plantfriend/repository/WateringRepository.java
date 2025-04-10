@@ -16,4 +16,7 @@ public interface WateringRepository extends JpaRepository<Watering, Long> {
     //  a Slice - knows if there's a next page or
     //  a List - current page only
     List<Watering> findAllByOrderByDateDesc(Pageable pageable);
+
+    List<Watering> findAllByPlantId(long plantId);
+
 }

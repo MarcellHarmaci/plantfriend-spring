@@ -2,6 +2,7 @@ package com.harmaci.plantfriend.controller;
 
 import com.harmaci.plantfriend.service.PlantService;
 import com.harmaci.plantfriend.service.WateringService;
+import jakarta.persistence.EntityNotFoundException;
 import org.openapitools.api.WateringsApiController;
 import org.openapitools.model.AddPlantWateringRequest;
 import org.openapitools.model.PlantWatering;
@@ -61,8 +62,26 @@ public class WateringController extends WateringsApiController {
 
     @Override
     public ResponseEntity<PlantWatering> addPlantWatering(Long id, AddPlantWateringRequest addPlantWateringRequest) {
-        // TODO implement endpoint
-        return super.addPlantWatering(id, addPlantWateringRequest);
+        if (!plantService.plantExists(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if (addPlantWateringRequest.getDate().isAfter(LocalDate.now())) {
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        try {
+            com.harmaci.plantfriend.repository.model.Watering watering = service.addWatering(
+                    id,
+                    addPlantWateringRequest.getDate(),
+                    addPlantWateringRequest.getPlantHealth(),
+                    addPlantWateringRequest.getComment().orElse(null)
+            );
+            return new ResponseEntity<>(
+                    Mapping.DomainToNetwork.plantWatering(watering),
+                    HttpStatus.OK
+            );
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
     }
 
     @Override

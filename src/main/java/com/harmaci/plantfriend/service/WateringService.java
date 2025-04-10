@@ -1,12 +1,17 @@
 package com.harmaci.plantfriend.service;
 
+import com.harmaci.plantfriend.repository.PlantRepository;
 import com.harmaci.plantfriend.repository.WateringRepository;
+import com.harmaci.plantfriend.repository.model.Plant;
 import com.harmaci.plantfriend.repository.model.Watering;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +20,8 @@ import java.util.stream.Collectors;
 public class WateringService {
     @Autowired
     private WateringRepository repository;
+    @Autowired
+    private PlantRepository plantRepository;
 
     public List<Watering> getRecentWaterings(int offset, int limit) {
         Pageable pageable = PageRequest.of(offset, limit, WateringRepository.SORT_BY_DATE.descending());
@@ -32,5 +39,13 @@ public class WateringService {
                 .collect(Collectors.toList());
     }
 
-
+    public Watering addWatering(
+            @NotNull Long id,
+            @NotNull LocalDate date,
+            @NotNull Integer plantHealth,
+            @Nullable String comment
+    ) throws EntityNotFoundException {
+        Plant plantRef = plantRepository.getReferenceById(id);
+        return repository.save(new Watering(plantRef, date, plantHealth, comment));
+    }
 }

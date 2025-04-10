@@ -2,6 +2,7 @@ package com.harmaci.plantfriend.service;
 
 import com.harmaci.plantfriend.repository.PlantRepository;
 import com.harmaci.plantfriend.repository.model.Plant;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nullable;
@@ -9,11 +10,8 @@ import java.util.List;
 
 @Service
 public class PlantService {
-    private final PlantRepository repository;
-
-    public PlantService(PlantRepository repository) {
-        this.repository = repository;
-    }
+    @Autowired
+    private PlantRepository repository;
 
     public List<Plant> findAll() {
         return repository.findAll();

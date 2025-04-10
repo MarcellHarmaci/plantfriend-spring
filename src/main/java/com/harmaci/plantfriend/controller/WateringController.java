@@ -1,12 +1,12 @@
 package com.harmaci.plantfriend.controller;
 
-import com.harmaci.plantfriend.service.Mapping;
 import com.harmaci.plantfriend.service.WateringService;
 import org.openapitools.api.WateringsApiController;
 import org.openapitools.model.AddPlantWateringRequest;
 import org.openapitools.model.PlantWatering;
 import org.openapitools.model.Watering;
 import org.openapitools.model.WateringUpdate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,11 +17,11 @@ import java.util.List;
 
 @Controller
 public class WateringController extends WateringsApiController {
-    private final WateringService service;
+    @Autowired
+    private WateringService service;
 
-    public WateringController(NativeWebRequest request, WateringService service) {
+    public WateringController(NativeWebRequest request) {
         super(request);
-        this.service = service;
     }
 
     @Override

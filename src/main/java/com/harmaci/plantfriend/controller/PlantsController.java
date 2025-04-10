@@ -1,9 +1,9 @@
 package com.harmaci.plantfriend.controller;
 
 import com.harmaci.plantfriend.repository.model.Plant;
-import com.harmaci.plantfriend.service.Mapping;
 import com.harmaci.plantfriend.service.PlantService;
 import org.openapitools.model.PlantData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,12 +12,12 @@ import org.springframework.web.context.request.NativeWebRequest;
 import java.util.List;
 
 @Controller
-public class PlantsApiController extends org.openapitools.api.PlantsApiController {
-    private final PlantService service;
+public class PlantsController extends org.openapitools.api.PlantsApiController {
+    @Autowired
+    private PlantService service;
 
-    public PlantsApiController(NativeWebRequest request, PlantService service) {
+    public PlantsController(NativeWebRequest request) {
         super(request);
-        this.service = service;
     }
 
     @Override

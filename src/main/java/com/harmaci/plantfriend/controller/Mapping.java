@@ -1,4 +1,4 @@
-package com.harmaci.plantfriend.service;
+package com.harmaci.plantfriend.controller;
 
 import com.harmaci.plantfriend.repository.model.Plant;
 import com.harmaci.plantfriend.repository.model.Watering;

@@ -1,5 +1,6 @@
 package com.harmaci.plantfriend.controller;
 
+import com.harmaci.plantfriend.service.PlantService;
 import com.harmaci.plantfriend.service.WateringService;
 import org.openapitools.api.WateringsApiController;
 import org.openapitools.model.AddPlantWateringRequest;
@@ -19,6 +20,8 @@ import java.util.List;
 public class WateringController extends WateringsApiController {
     @Autowired
     private WateringService service;
+    @Autowired
+    private PlantService plantService;
 
     public WateringController(NativeWebRequest request) {
         super(request);
@@ -35,6 +38,10 @@ public class WateringController extends WateringsApiController {
 
     @Override
     public ResponseEntity<List<PlantWatering>> getWateringsByPlant(Long id) {
+        if (!plantService.plantExists(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         List<PlantWatering> wateringsOfPlant = service.getWateringsByPlantId(id)
                 .stream()
                 .map(Mapping.DomainToNetwork::plantWatering)
@@ -44,6 +51,10 @@ public class WateringController extends WateringsApiController {
 
     @Override
     public ResponseEntity<List<LocalDate>> getWateringDatesByPlant(Long id) {
+        if (!plantService.plantExists(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         List<LocalDate> wateringDates = service.getWateringDatesByPlantId(id);
         return new ResponseEntity<>(wateringDates, HttpStatus.OK);
     }

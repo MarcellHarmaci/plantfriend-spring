@@ -48,4 +48,12 @@ public class WateringService {
         Plant plantRef = plantRepository.getReferenceById(id);
         return repository.save(new Watering(plantRef, date, plantHealth, comment));
     }
+
+    public boolean deleteWateringById(Long id) {
+        if (!plantRepository.existsById(id)) {
+            return false;
+        }
+        repository.deleteById(id);
+        return true;
+    }
 }

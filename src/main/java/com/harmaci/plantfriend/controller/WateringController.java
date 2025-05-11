@@ -92,7 +92,7 @@ public class WateringController extends WateringsApiController {
 
     @Override
     public ResponseEntity<Void> deleteWateringById(Long id) {
-        // TODO implement endpoint
-        return super.deleteWateringById(id);
+        boolean isDeleted = service.deleteWateringById(id);
+        return new ResponseEntity<>(isDeleted ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }

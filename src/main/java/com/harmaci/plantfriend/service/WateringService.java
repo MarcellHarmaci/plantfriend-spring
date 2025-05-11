@@ -39,7 +39,7 @@ public class WateringService {
                 .collect(Collectors.toList());
     }
 
-    public Watering addWatering(
+    public Watering createWatering(
             @NotNull Long id,
             @NotNull LocalDate date,
             @NotNull Integer plantHealth,
@@ -47,6 +47,16 @@ public class WateringService {
     ) throws EntityNotFoundException {
         Plant plantRef = plantRepository.getReferenceById(id);
         return repository.save(new Watering(plantRef, date, plantHealth, comment));
+    }
+
+    public boolean updateWatering(Long id, LocalDate localDate, @Nullable String comment) {
+        return repository.findById(id)
+                .map(watering -> {
+                    watering.date(localDate);
+                    watering.comment(comment);
+                    return repository.save(watering);
+                })
+                .isPresent();
     }
 
     public boolean deleteWateringById(Long id) {

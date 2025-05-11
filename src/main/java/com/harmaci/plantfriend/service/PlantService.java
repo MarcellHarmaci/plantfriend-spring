@@ -23,7 +23,7 @@ public class PlantService {
     }
 
     public boolean plantExists(Long id) {
-        return repository.findById(id).isPresent();
+        return repository.existsById(id);
     }
 
     /**

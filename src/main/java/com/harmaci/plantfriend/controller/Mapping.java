@@ -2,6 +2,7 @@ package com.harmaci.plantfriend.controller;
 
 import com.harmaci.plantfriend.repository.model.Plant;
 import com.harmaci.plantfriend.repository.model.Watering;
+import org.openapitools.model.WateringUpdate;
 
 import javax.annotation.Nonnull;
 

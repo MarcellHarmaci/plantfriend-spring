@@ -69,7 +69,7 @@ public class WateringController extends WateringsApiController {
             return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
         try {
-            com.harmaci.plantfriend.repository.model.Watering watering = service.addWatering(
+            com.harmaci.plantfriend.repository.model.Watering watering = service.createWatering(
                     id,
                     addPlantWateringRequest.getDate(),
                     addPlantWateringRequest.getPlantHealth(),
@@ -86,8 +86,12 @@ public class WateringController extends WateringsApiController {
 
     @Override
     public ResponseEntity<Watering> updateWateringById(Long id, WateringUpdate wateringUpdate) {
-        // TODO implement endpoint
-        return super.updateWateringById(id, wateringUpdate);
+        boolean isUpdated = service.updateWatering(
+                id,
+                wateringUpdate.getDate(),
+                wateringUpdate.getComment().orElse(null)
+        );
+        return new ResponseEntity<>(isUpdated ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
     @Override

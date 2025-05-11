@@ -36,6 +36,13 @@ public class Watering {
     public Watering() {
     }
 
+    public Watering(Long id, Plant plant, LocalDate date, Integer plantHealth, String comment) {
+        this.id = id;
+        this.date = date;
+        this.plantHealth = plantHealth;
+        this.comment = comment;
+    }
+
     public Watering(Plant plant, LocalDate date, Integer plantHealth, String comment) {
         this.plant = plant;
         this.date = date;

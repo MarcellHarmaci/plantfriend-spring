@@ -2,7 +2,6 @@ package com.harmaci.plantfriend.controller;
 
 import com.harmaci.plantfriend.repository.model.Plant;
 import com.harmaci.plantfriend.repository.model.Watering;
-import org.openapitools.model.WateringUpdate;
 
 import javax.annotation.Nonnull;
 
@@ -28,14 +27,6 @@ public class Mapping {
             networkModel.setId(domainModel.id());
             return networkModel;
         }
-
-        public static org.openapitools.model.PlantWatering plantWatering(Watering domainModel) {
-            return new org.openapitools.model.PlantWatering(
-                    domainModel.id(),
-                    domainModel.date(),
-                    domainModel.comment()
-            );
-        }
     }
 
     /**
@@ -46,6 +37,16 @@ public class Mapping {
             return new Plant(
                     networkModel.getId(),
                     networkModel.getName()
+            );
+        }
+
+        public static Watering watering(@Nonnull org.openapitools.model.Watering networkModel) {
+            return new Watering(
+                    networkModel.getId(),
+                    null, // instance needs to be fetched from PlantRepository using findById or getReferenceById
+                    networkModel.getDate(),
+                    networkModel.getPlantHealth(),
+                    networkModel.getComment().orElse(null)
             );
         }
     }

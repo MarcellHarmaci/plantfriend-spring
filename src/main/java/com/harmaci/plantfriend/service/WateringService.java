@@ -4,9 +4,11 @@ import com.harmaci.plantfriend.repository.PlantRepository;
 import com.harmaci.plantfriend.repository.WateringRepository;
 import com.harmaci.plantfriend.repository.model.Plant;
 import com.harmaci.plantfriend.repository.model.Watering;
+import com.harmaci.plantfriend.service.util.Util;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -49,14 +51,21 @@ public class WateringService {
         return repository.save(new Watering(plantRef, date, plantHealth, comment));
     }
 
-    public boolean updateWatering(Long id, LocalDate localDate, @Nullable String comment) {
-        return repository.findById(id)
-                .map(watering -> {
-                    watering.date(localDate);
-                    watering.comment(comment);
-                    return repository.save(watering);
-                })
-                .isPresent();
+    public Watering updateWatering(Watering watering, Long plantId)
+            throws EntityNotFoundException, DataIntegrityViolationException {
+        Watering existingWatering = repository
+                .findById(watering.id())
+                .orElseThrow(Util.getEnfException("watering", watering.id()));
+
+        Plant originalPlant = existingWatering.plant();
+        if (!originalPlant.id().equals(plantId)) {
+            throw new DataIntegrityViolationException(String.format(
+                    "Watering %d belongs to plant %d, but %d provided",
+                    watering.id(), originalPlant.id(), plantId
+            ));
+        }
+
+        return repository.save(watering);
     }
 
     public boolean deleteWateringById(Long id) {

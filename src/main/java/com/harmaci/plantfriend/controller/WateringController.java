@@ -4,11 +4,9 @@ import com.harmaci.plantfriend.service.PlantService;
 import com.harmaci.plantfriend.service.WateringService;
 import jakarta.persistence.EntityNotFoundException;
 import org.openapitools.api.WateringsApiController;
-import org.openapitools.model.AddPlantWateringRequest;
-import org.openapitools.model.PlantWatering;
 import org.openapitools.model.Watering;
-import org.openapitools.model.WateringUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -38,14 +36,14 @@ public class WateringController extends WateringsApiController {
     }
 
     @Override
-    public ResponseEntity<List<PlantWatering>> getWateringsByPlant(Long id) {
+    public ResponseEntity<List<Watering>> getWateringsByPlant(Long id) {
         if (!plantService.plantExists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        List<PlantWatering> wateringsOfPlant = service.getWateringsByPlantId(id)
+        List<Watering> wateringsOfPlant = service.getWateringsByPlantId(id)
                 .stream()
-                .map(Mapping.DomainToNetwork::plantWatering)
+                .map(Mapping.DomainToNetwork::watering)
                 .toList();
         return new ResponseEntity<>(wateringsOfPlant, HttpStatus.OK);
     }
@@ -61,22 +59,22 @@ public class WateringController extends WateringsApiController {
     }
 
     @Override
-    public ResponseEntity<PlantWatering> addPlantWatering(Long id, AddPlantWateringRequest addPlantWateringRequest) {
+    public ResponseEntity<Watering> addPlantWatering(Long id, Watering wateringToAdd) {
         if (!plantService.plantExists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        if (addPlantWateringRequest.getDate().isAfter(LocalDate.now())) {
+        if (wateringToAdd.getDate().isAfter(LocalDate.now())) {
             return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
         try {
             com.harmaci.plantfriend.repository.model.Watering watering = service.createWatering(
                     id,
-                    addPlantWateringRequest.getDate(),
-                    addPlantWateringRequest.getPlantHealth(),
-                    addPlantWateringRequest.getComment().orElse(null)
+                    wateringToAdd.getDate(),
+                    wateringToAdd.getPlantHealth(),
+                    wateringToAdd.getComment().orElse(null)
             );
             return new ResponseEntity<>(
-                    Mapping.DomainToNetwork.plantWatering(watering),
+                    Mapping.DomainToNetwork.watering(watering),
                     HttpStatus.OK
             );
         } catch (EntityNotFoundException e) {
@@ -85,13 +83,22 @@ public class WateringController extends WateringsApiController {
     }
 
     @Override
-    public ResponseEntity<Watering> updateWateringById(Long id, WateringUpdate wateringUpdate) {
-        boolean isUpdated = service.updateWatering(
-                id,
-                wateringUpdate.getDate(),
-                wateringUpdate.getComment().orElse(null)
-        );
-        return new ResponseEntity<>(isUpdated ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    public ResponseEntity<Watering> updateWateringById(Long id, Watering updatedWatering) {
+        if (!id.equals(updatedWatering.getId())) {
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        try {
+            com.harmaci.plantfriend.repository.model.Watering wateringWithoutPlant =
+                    Mapping.NetworkToDomain.watering(updatedWatering);
+            Watering resultingWatering = Mapping.DomainToNetwork.watering(
+                    service.updateWatering(wateringWithoutPlant, updatedWatering.getPlantId())
+            );
+            return new ResponseEntity<>(resultingWatering, HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (DataIntegrityViolationException e) {
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
     }
 
     @Override
